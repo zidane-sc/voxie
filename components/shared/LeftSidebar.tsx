@@ -1,16 +1,16 @@
-"use client";
+"use client"
 
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { SignOutButton, SignedIn, useAuth } from "@clerk/nextjs";
+import { SignOutButton, SignedIn, SignedOut, SignInButton, SignUpButton, useAuth } from "@clerk/nextjs";
 
 import { sidebarLinks } from "@/constants";
+import { currentUser } from "@clerk/nextjs/server";
 
 const LeftSidebar = () => {
   const router = useRouter();
   const pathname = usePathname();
-
   const { userId } = useAuth();
 
   return (
@@ -21,7 +21,13 @@ const LeftSidebar = () => {
             (pathname.includes(link.route) && link.route.length > 1) ||
             pathname === link.route;
 
-          if (link.route === "/profile") link.route = `${link.route}/${userId}`;
+          if (link.route === "/profile") {
+            if (!userId) {
+              return null;
+            } else {
+              link.route = `${link.route}/${userId}`;
+            }
+          }
 
           return (
             <Link
@@ -57,6 +63,36 @@ const LeftSidebar = () => {
             </div>
           </SignOutButton>
         </SignedIn>
+
+        <SignedOut>
+          <SignInButton>
+            <div className="flex cursor-pointer gap-4 p-4 text-light-1">
+              <Image 
+                src="/assets/sign-in.png" 
+                alt="login" 
+                width={24} 
+                height={24}
+                className="invert"
+              />
+
+              <p className='text-light-2 max-lg:hidden'>Sign in</p>
+            </div>
+          </SignInButton>
+
+          <SignUpButton>
+            <div className="flex cursor-pointer gap-4 p-4">
+              <Image 
+                src="/assets/sign-up.png" 
+                alt="signup" 
+                width={24} 
+                height={24}
+                className="invert"
+              />
+
+              <p className='text-light-2 max-lg:hidden'>Sign up</p>
+            </div>
+          </SignUpButton>
+        </SignedOut>
       </div>
     </section>
   );

@@ -1,4 +1,4 @@
-import { OrganizationSwitcher, SignedIn, SignOutButton } from "@clerk/nextjs";
+import { OrganizationSwitcher, SignedIn, SignedOut, SignOutButton, SignInButton, SignUpButton } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
 import Image from "next/image";
 import Link from "next/link";
@@ -25,6 +25,32 @@ function Topbar() {
               </div>
             </SignOutButton>
           </SignedIn>
+
+          <SignedOut>
+            <SignInButton>
+              <div className="flex cursor-pointer">
+                <Image 
+                  src="/assets/sign-in.png" 
+                  alt="login" 
+                  width={24} 
+                  height={24}
+                  className="invert"
+                />
+              </div>
+            </SignInButton>
+
+            <SignUpButton>
+              <div className="flex cursor-pointer">
+                <Image 
+                  src="/assets/sign-up.png" 
+                  alt="signup" 
+                  width={24} 
+                  height={24}
+                  className="invert"
+                />
+              </div>
+            </SignUpButton>
+          </SignedOut>
         </div>
 
         <OrganizationSwitcher 
