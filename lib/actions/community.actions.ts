@@ -70,11 +70,11 @@ export async function fetchCommunityDetails(id: string) {
   }
 }
 
-export async function fetchCommunityPosts(id: string) {
+export async function fetchCommunityThreads(id: string) {
   try {
     connectToDB();
 
-    const communityPosts = await Community.findById(id).populate({
+    const communityThreads = await Community.findById(id).populate({
       path: "threads",
       model: Thread,
       populate: [
@@ -95,7 +95,7 @@ export async function fetchCommunityPosts(id: string) {
       ],
     });
 
-    return communityPosts;
+    return communityThreads;
   } catch (error) {
     // Handle any errors
     console.error("Error fetching community posts:", error);
@@ -104,12 +104,12 @@ export async function fetchCommunityPosts(id: string) {
 }
 
 export async function fetchCommunities({
-  searchString = "",
+  search = "",
   pageNumber = 1,
   pageSize = 20,
   sortBy = "desc",
 }: {
-  searchString?: string;
+  search?: string;
   pageNumber?: number;
   pageSize?: number;
   sortBy?: SortOrder;
@@ -121,13 +121,13 @@ export async function fetchCommunities({
     const skipAmount = (pageNumber - 1) * pageSize;
 
     // Create a case-insensitive regular expression for the provided search string.
-    const regex = new RegExp(searchString, "i");
+    const regex = new RegExp(search, "i");
 
     // Create an initial query object to filter communities.
     const query: FilterQuery<typeof Community> = {};
 
     // If the search string is not empty, add the $or operator to match either username or name fields.
-    if (searchString.trim() !== "") {
+    if (search.trim() !== "") {
       query.$or = [
         { username: { $regex: regex } },
         { name: { $regex: regex } },
