@@ -27,7 +27,7 @@ function Topbar() {
           </SignedIn>
 
           <SignedOut>
-            <SignInButton>
+            <SignInButton fallbackRedirectUrl="/onboarding">
               <div className="flex cursor-pointer">
                 <Image 
                   src="/assets/sign-in.png" 
@@ -38,18 +38,6 @@ function Topbar() {
                 />
               </div>
             </SignInButton>
-
-            <SignUpButton>
-              <div className="flex cursor-pointer">
-                <Image 
-                  src="/assets/sign-up.png" 
-                  alt="signup" 
-                  width={24} 
-                  height={24}
-                  className="invert"
-                />
-              </div>
-            </SignUpButton>
           </SignedOut>
         </div>
 
