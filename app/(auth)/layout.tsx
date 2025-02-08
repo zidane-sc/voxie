@@ -1,9 +1,10 @@
 import { ClerkProvider } from "@clerk/nextjs"
+import { Metadata } from "next";
 import { Inter } from "next/font/google"
 
 import '../globals.css';
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Voxie',
   description: 'Thread based discussion platform',
 }
@@ -19,7 +20,9 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={`${inter.className} bg-dark-1`}>
-          {children}
+          <div className="w-full flex justify-center items-center min-h-screen">
+            {children}
+          </div>
         </body>
       </html>
     </ClerkProvider>
